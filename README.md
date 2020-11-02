@@ -1,11 +1,5 @@
 # Curso da Udemy [API RESTful 2020 - Spring Boot, AWS, JWT, Upload S3, Github](https://www.udemy.com/course/restful-springboot-aws/).
 
-<style>
-    p {
-        text-align: justify;
-    }
-</style>
-
 # Descrição
 
 <p>Este curso é um Kit completo para ajudar você a desenvolver <strong>APIs com o Spring Boot</strong> que podem se comunicar com componentes externos como aplicações moveis, aplicações web, aplicações desktops, web sites, etc. Desenvolvemos a API ao longo do curso pensando sempre em <strong>boas praticas</strong>, <strong>validando dados de entrada</strong>, configurando o <strong>carregamento sobre demanda</strong> de modo a obter melhor performance, configurando a <strong>ordenação dos dados por atributos de uma entidade</strong>, configurando a <strong>segurança</strong> com o <strong>Spring Security</strong> e <strong>JSON Web Token (JWT)</strong> com <strong>suporte a controle de acessos (ACL)</strong>, libertação de recursos dependendo do ROLE / TIPO de usuário, configurando o <strong>upload de múltiplos ficheiros para a Amazon S3</strong>, retornando exceções especificas dependendo do tipo de problema.</p>
