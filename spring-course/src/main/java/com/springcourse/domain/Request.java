@@ -20,14 +20,6 @@ import javax.persistence.TemporalType;
 
 import com.springcourse.domain.enums.RequestState;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter @Setter
 @Entity(name = "request")
 public class Request implements Serializable {
 
@@ -60,4 +52,82 @@ public class Request implements Serializable {
 	
 	@OneToMany(mappedBy="request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
+
+	public Request() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Request(Long id, String subject, String description, Date criationDate, RequestState state, User owner,
+			List<RequestStage> stages) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.description = description;
+		this.criationDate = criationDate;
+		this.state = state;
+		this.owner = owner;
+		this.stages = stages;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCriationDate() {
+		return criationDate;
+	}
+
+	public void setCriationDate(Date criationDate) {
+		this.criationDate = criationDate;
+	}
+
+	public RequestState getState() {
+		return state;
+	}
+
+	public void setState(RequestState state) {
+		this.state = state;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<RequestStage> getStages() {
+		return stages;
+	}
+
+	public void setStages(List<RequestStage> stages) {
+		this.stages = stages;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

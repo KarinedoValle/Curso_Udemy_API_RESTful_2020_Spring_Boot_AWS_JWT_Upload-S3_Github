@@ -17,14 +17,6 @@ import javax.persistence.TemporalType;
 
 import com.springcourse.domain.enums.RequestState;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter @Setter
 @Entity(name = "request_stage")
 public class RequestStage implements Serializable {
 	/**
@@ -54,4 +46,72 @@ public class RequestStage implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "owner_id", nullable = false)
 	private User owner;
+
+	public RequestStage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestStage(Long id, String description, Date realizationDate, RequestState state, Request request,
+			User owner) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.realizationDate = realizationDate;
+		this.state = state;
+		this.request = request;
+		this.owner = owner;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getRealizationDate() {
+		return realizationDate;
+	}
+
+	public void setRealizationDate(Date realizationDate) {
+		this.realizationDate = realizationDate;
+	}
+
+	public RequestState getState() {
+		return state;
+	}
+
+	public void setState(RequestState state) {
+		this.state = state;
+	}
+
+	public Request getRequest() {
+		return request;
+	}
+
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
