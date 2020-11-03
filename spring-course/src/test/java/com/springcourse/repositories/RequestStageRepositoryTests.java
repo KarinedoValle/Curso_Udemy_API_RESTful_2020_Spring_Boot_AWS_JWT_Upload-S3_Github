@@ -25,10 +25,10 @@ public class RequestStageRepositoryTests {
 	@Test
 	public void saveTest() {
 		User owner = new User();
-		owner.setId(14L);
+		owner.setId(1L);
 
 		Request request = new Request();
-		request.setId(5L);
+		request.setId(1L);
 		
 		RequestStage requestStage = new RequestStage(null, "Test", new Date(), RequestState.OPEN, request, owner);
 		RequestStage createdRequestStage = requestStageRepository.save(requestStage);
@@ -53,12 +53,22 @@ public class RequestStageRepositoryTests {
 		Optional<RequestStage> opFoundRequestStage = requestStageRepository.findById(1L);
 		RequestStage foundRequestStage = opFoundRequestStage.get();
 
-		assertThat(foundRequestStage.getDescription()).isEqualTo("Test test2");
+		assertThat(foundRequestStage.getDescription()).isEqualTo("Test test");
 	}
 
 	@Test
 	public void findAllTest() {
 		List<RequestStage> requestStagesList = requestStageRepository.findAll();
+
+		assertThat(requestStagesList.size()).isEqualTo(1);
+	}
+	
+	@Test
+	public void findAllByRequestIdTest() {
+		Request request = new Request();
+		 request.setId(1L);
+		
+		List<RequestStage> requestStagesList = requestStageRepository.findAllByRequest(request);
 
 		assertThat(requestStagesList.size()).isEqualTo(1);
 	}
