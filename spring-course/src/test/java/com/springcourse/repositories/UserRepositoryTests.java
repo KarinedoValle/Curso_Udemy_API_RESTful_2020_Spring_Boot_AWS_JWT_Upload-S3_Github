@@ -63,13 +63,13 @@ public class UserRepositoryTests {
 		assertThat(loggedUser.getId()).isEqualTo(1L);
 	}
 	
-	@Test
-	public void deleteTest() {
-		Optional<User> opUser = userRepository.findById(1L);
-		userRepository.delete(opUser.get());
-		
-		Optional<User> opUserdelete = userRepository.findById(1L);
-		
-		assertThat(opUserdelete.isPresent()).isEqualTo(false);
-	}
+//	@Test
+//	public void deleteTest() {
+//		Optional<User> opUser = userRepository.findById(1L);
+//		userRepository.delete(opUser.get());
+//		
+//		Optional<User> opUserdelete = userRepository.findById(1L);
+//		
+//		assertThat(opUserdelete.isPresent()).isEqualTo(false);
+//	}
 }

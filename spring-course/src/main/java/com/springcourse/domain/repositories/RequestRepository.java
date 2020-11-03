@@ -2,7 +2,10 @@ package com.springcourse.domain.repositories;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +18,9 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	
 	public List<Request> findAllByOwnerId(Long id);
 	
+	@Transactional
+	@Modifying
 	@Query("UPDATE request SET state = :state WHERE id = :id")
-	public Request updateState(Long id, RequestState state);
+	public int updateState(Long id, RequestState state);
 
 }
