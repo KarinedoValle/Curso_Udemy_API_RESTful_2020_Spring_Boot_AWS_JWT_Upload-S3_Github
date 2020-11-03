@@ -55,16 +55,16 @@ public class RequestRepositoryTests {
 	
 	@Test
 	public void findAllTest() {
-		List <Request> usersList = requestRepository.findAll();
+		List <Request> requestsList = requestRepository.findAll();
 		
-		assertThat(usersList.size()).isEqualTo(1);
+		assertThat(requestsList.size()).isEqualTo(1);
 	}
 	
 	@Test
 	public void findAllByOwnerIdTest() {
-		List <Request> usersList = requestRepository.findAllByOwnerId(1L);
+		List <Request> requestsList = requestRepository.findAllByOwnerId(1L);
 		
-		assertThat(usersList.size()).isEqualTo(1);
+		assertThat(requestsList.size()).isEqualTo(1);
 	}
 	
 	@Test
@@ -78,10 +78,10 @@ public class RequestRepositoryTests {
 	
 //	@Test
 //	public void deleteTest() {
-//		Optional<Request> opRequest = requestRepository.findById(4L);
+//		Optional<Request> opRequest = requestRepository.findById(1L);
 //		requestRepository.delete(opRequest.get());
 //		
-//		Optional<Request> opRequestdelete = requestRepository.findById(4L);
+//		Optional<Request> opRequestdelete = requestRepository.findById(1L);
 //		
 //		assertThat(opRequestdelete.isPresent()).isEqualTo(false);
 //	}
