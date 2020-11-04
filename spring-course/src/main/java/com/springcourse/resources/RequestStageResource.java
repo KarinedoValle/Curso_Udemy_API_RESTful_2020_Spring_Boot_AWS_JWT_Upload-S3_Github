@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
+import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.services.RequestStageService;
 
 @RestController
@@ -40,7 +41,7 @@ public class RequestStageResource {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<RequestStage> findById(@PathVariable Long id){
+	public ResponseEntity<RequestStage> findById(@PathVariable Long id) throws NotFoundException{
 		RequestStage foundRequestStage = requestStageService.findById(id);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(foundRequestStage);

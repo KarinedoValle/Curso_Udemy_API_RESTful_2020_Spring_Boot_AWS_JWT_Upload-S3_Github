@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.services.RequestService;
 import com.springcourse.services.UserService;
 
@@ -43,7 +44,7 @@ public class UserResource {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
+	public ResponseEntity<User> findById(@PathVariable Long id) throws NotFoundException{
 		User foundUser = userService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(foundUser);
 	}
@@ -55,7 +56,7 @@ public class UserResource {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody UserLoginDto login){
+	public ResponseEntity<User> login(@RequestBody UserLoginDto login) throws NotFoundException{
 		User loggedUser = userService.login(login.getEmail(), login.getPassword());
 		return ResponseEntity.status(HttpStatus.OK).body(loggedUser);
 	}

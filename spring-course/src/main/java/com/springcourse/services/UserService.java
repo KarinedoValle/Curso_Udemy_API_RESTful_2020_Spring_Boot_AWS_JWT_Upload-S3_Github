@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.User;
 import com.springcourse.domain.repositories.UserRepository;
+import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.services.util.HashUtil;
 
 @Service
@@ -32,8 +33,12 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-	public User findById(Long id) {
+	public User findById(Long id) throws NotFoundException {
 		Optional<User> opUser = userRepository.findById(id);
+		
+		if(!opUser.isPresent()) {
+			throw new NotFoundException("Não existe um usuário com id " + id + ".");
+		}
 		
 		return opUser.get();
 	}
@@ -43,11 +48,16 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public User login(String email, String password) {
+	public User login(String email, String password) throws NotFoundException {
 		
 		String hashPassword = HashUtil.getSecureHash(password);
 		
 		Optional<User> opUser = userRepository.login(email, hashPassword);
+		
+		if(!opUser.isPresent()) {
+			throw new NotFoundException("Não existe um usuário com e-mail " + email + " ou senha " + password + ".");
+		}
+		
 		return opUser.get();
 	}
 	

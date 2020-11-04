@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.repositories.RequestStageRepository;
+import com.springcourse.exceptions.NotFoundException;
 
 @Service
 public class RequestStageService {
@@ -25,8 +26,12 @@ public class RequestStageService {
 		return requestStageRepository.save(requestStage);
 	}
 	
-	public RequestStage findById(Long id) {
+	public RequestStage findById(Long id) throws NotFoundException {
 		Optional<RequestStage> opRequestStage = requestStageRepository.findById(id);
+		
+		if(!opRequestStage.isPresent()) {
+			throw new NotFoundException("Não existe um estágio com id " + id + ".");
+		}
 		return opRequestStage.get();
 	}
 	

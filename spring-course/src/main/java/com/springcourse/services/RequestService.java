@@ -1,8 +1,5 @@
 package com.springcourse.services;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.enums.RequestState;
 import com.springcourse.domain.repositories.RequestRepository;
+import com.springcourse.exceptions.NotFoundException;
 
 @Service
 public class RequestService {
@@ -31,8 +29,12 @@ public class RequestService {
 		return requestRepository.save(request);
 	}
 	
-	public Request findById(Long id) {
+	public Request findById(Long id) throws NotFoundException {
 		Optional<Request> opRequest = requestRepository.findById(id);
+		
+		if(!opRequest.isPresent()) {
+			throw new NotFoundException("Não existe um pedido com id " + id + ".");
+		}
 		
 		return opRequest.get();
 	}
