@@ -33,8 +33,8 @@ public class RequestStageService {
 		return requestStageRepository.findAll();
 	}
 	
-	public List<RequestStage> findAllByRequest(Request request){
-		return requestStageRepository.findAllByRequest(request);
+	public List<RequestStage> findAllByRequestId(Long id){
+		return requestStageRepository.findAllByRequestId(id);
 	}
 
 }

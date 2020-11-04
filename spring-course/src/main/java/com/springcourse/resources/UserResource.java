@@ -60,7 +60,7 @@ public class UserResource {
 		return ResponseEntity.status(HttpStatus.OK).body(loggedUser);
 	}
 	
-	@GetMapping("/requests/{id}")
+	@GetMapping("/requestsByUser/{id}")
 	public ResponseEntity<List<Request>> findAllByOwnerId(@PathVariable Long id){
 		List<Request> requestsList = requestService.findAllByOwnerId(id);
 		
