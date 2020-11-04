@@ -5,12 +5,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.Request;
 import com.springcourse.domain.enums.RequestState;
 import com.springcourse.domain.repositories.RequestRepository;
 import com.springcourse.exceptions.NotFoundException;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 
 @Service
 public class RequestService {
@@ -49,6 +54,17 @@ public class RequestService {
 	
 	public void updateState(Long id, RequestState state) {
 		requestRepository.updateState(id, state);
+	}
+
+	public PageModel<Request> findAllByOwnerIdPageable(Long id, PageRequestModel pageRequest) {
+		
+		Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), pageRequest.getDirection(),pageRequest.getSortParam());
+		
+		Page<Request> page = requestRepository.findAllByOwnerId(id, pageable);
+		
+		PageModel<Request> requestPage = new PageModel<>(page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getSort(), page.getContent()); 
+		
+		return requestPage;
 	}
 
 }

@@ -9,6 +9,10 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
@@ -65,6 +69,14 @@ public class RequestRepositoryTests {
 		List <Request> requestsList = requestRepository.findAllByOwnerId(1L);
 		
 		assertThat(requestsList.size()).isEqualTo(1);
+	}
+	
+	@Test
+	public void findAllByOwnerIdTestPageable() {
+		Pageable pageable = PageRequest.of(0, 5, Direction.DESC,"id");
+		Page <Request> requestsList = requestRepository.findAllByOwnerId(1L, pageable);
+		
+		assertThat(requestsList.getSize()).isEqualTo(5);
 	}
 	
 	@Test

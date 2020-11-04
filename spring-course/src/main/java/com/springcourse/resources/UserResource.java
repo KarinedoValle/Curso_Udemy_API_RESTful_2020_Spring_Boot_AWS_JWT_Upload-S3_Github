@@ -3,6 +3,7 @@ package com.springcourse.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
 import com.springcourse.exceptions.NotFoundException;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 import com.springcourse.services.RequestService;
 import com.springcourse.services.UserService;
 
@@ -55,6 +59,13 @@ public class UserResource {
 		return ResponseEntity.status(HttpStatus.OK).body(usersList);
 	}
 	
+	@GetMapping("/page")
+	public ResponseEntity<PageModel<User>> findAllPageable(@RequestParam int page, int size, Direction direction, String parameter){
+		PageRequestModel pageRequest = new PageRequestModel(page, size, direction, parameter);
+		PageModel<User> usersList = userService.findAllPageable(pageRequest);
+		return ResponseEntity.status(HttpStatus.OK).body(usersList);
+	}
+	
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody UserLoginDto login) throws NotFoundException{
 		User loggedUser = userService.login(login.getEmail(), login.getPassword());
@@ -64,6 +75,15 @@ public class UserResource {
 	@GetMapping("/requestsByUser/{id}")
 	public ResponseEntity<List<Request>> findAllByOwnerId(@PathVariable Long id){
 		List<Request> requestsList = requestService.findAllByOwnerId(id);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
+	}
+	
+	@GetMapping("/page/requestsByUser/{id}")
+	public ResponseEntity<PageModel<Request>> findAllByOwnerIdPageable(@PathVariable Long id, @RequestParam int page, int size, Direction direction, String parameter){
+		PageRequestModel pageRequest = new PageRequestModel(page, size, direction, parameter);
+		
+		PageModel<Request> requestsList = requestService.findAllByOwnerIdPageable(id, pageRequest);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
 	}

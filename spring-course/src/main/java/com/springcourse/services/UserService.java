@@ -1,15 +1,20 @@
 package com.springcourse.services;
 
-import java.util.List;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.User;
 import com.springcourse.domain.repositories.UserRepository;
 import com.springcourse.exceptions.NotFoundException;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 import com.springcourse.services.util.HashUtil;
 
 @Service
@@ -46,6 +51,15 @@ public class UserService {
 	public List<User> findAll(){
 		
 		return userRepository.findAll();
+	}
+	
+	public PageModel<User> findAllPageable(PageRequestModel pageRequest){
+		Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), pageRequest.getDirection(), pageRequest.getSortParam());
+		Page<User> page = userRepository.findAll(pageable); 
+		
+		PageModel<User> userPage = new PageModel<>(page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getSort(), page.getContent());
+		
+		return userPage;
 	}
 	
 	public User login(String email, String password) throws NotFoundException {
