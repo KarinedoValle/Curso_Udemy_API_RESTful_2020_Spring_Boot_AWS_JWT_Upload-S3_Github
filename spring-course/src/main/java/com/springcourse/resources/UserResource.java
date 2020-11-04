@@ -49,7 +49,7 @@ public class UserResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(@PathVariable Long id){
+	public ResponseEntity<List<User>> findAll(){
 		List<User> usersList = userService.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(usersList);
 	}

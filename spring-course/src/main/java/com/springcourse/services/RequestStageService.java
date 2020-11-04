@@ -1,12 +1,12 @@
 package com.springcourse.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.repositories.RequestStageRepository;
 
@@ -17,6 +17,7 @@ public class RequestStageService {
 	RequestStageRepository requestStageRepository;
 	
 	public RequestStage save(RequestStage requestStage) {
+		requestStage.setRealizationDate(new Date());
 		return requestStageRepository.save(requestStage);
 	}
 	

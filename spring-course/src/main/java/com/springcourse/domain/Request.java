@@ -18,6 +18,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.springcourse.domain.enums.RequestState;
 
 @Entity(name = "request")
@@ -50,6 +55,7 @@ public class Request implements Serializable {
 	@JoinColumn(name = "owner_id", nullable = false)
 	private User owner;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy="request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
 
