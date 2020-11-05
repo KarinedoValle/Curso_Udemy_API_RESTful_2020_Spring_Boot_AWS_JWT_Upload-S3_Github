@@ -1,9 +1,14 @@
 package com.springcourse.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class UserLoginDto {
 	
+	@Email(message = "E-mail inválido.")
 	private String email;
 	
+	@NotBlank(message = "A senha deve ser preenchida.")
 	private String password;
 
 	public UserLoginDto() {

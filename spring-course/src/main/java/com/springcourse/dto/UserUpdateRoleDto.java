@@ -1,9 +1,12 @@
 package com.springcourse.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.springcourse.domain.enums.Role;
 
 public class UserUpdateRoleDto {
 	
+	@NotNull(message = "A role deve ser preenchida.")
 	private Role role;
 
 	public UserUpdateRoleDto() {

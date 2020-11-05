@@ -2,6 +2,8 @@ package com.springcourse.resources;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.dto.UserUpdateDto;
 import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.model.PageModel;
@@ -38,13 +41,14 @@ public class UserResource {
 	private RequestService requestService;
 	
 	@PostMapping
-	public ResponseEntity<User> save(@RequestBody User user) {
+	public ResponseEntity<User> save(@RequestBody @Valid User user) {
 		User createdUser = userService.save(user);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
+	public ResponseEntity<User> update(@RequestBody @Valid UserUpdateDto userDto, @PathVariable Long id) {
+		User user = userDto.TransformToUser();
 		user.setId(id);
 		User updatedUser = userService.update(user);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
@@ -69,7 +73,7 @@ public class UserResource {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody UserLoginDto login) throws NotFoundException{
+	public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto login) throws NotFoundException{
 		User loggedUser = userService.login(login.getEmail(), login.getPassword());
 		return ResponseEntity.status(HttpStatus.OK).body(loggedUser);
 	}
@@ -90,7 +94,7 @@ public class UserResource {
 	}
 	
 	@PatchMapping("/role/{id}")
-	public ResponseEntity<?> updateRole(@RequestBody UserUpdateRoleDto userDto, @PathVariable Long id){
+	public ResponseEntity<?> updateRole(@RequestBody @Valid UserUpdateRoleDto userDto, @PathVariable Long id){
 		User user = new User();
 		user.setId(id);
 		user.setRole(userDto.getRole());

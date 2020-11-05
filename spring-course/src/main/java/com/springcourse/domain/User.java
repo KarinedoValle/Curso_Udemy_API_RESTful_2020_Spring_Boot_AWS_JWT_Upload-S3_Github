@@ -1,7 +1,6 @@
 package com.springcourse.domain;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,17 +34,23 @@ public class User implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull @NotBlank
 	@Column(length= 75, nullable=false)
 	private String name;
 	
+	@NotNull @NotBlank
+	@Email(message = "E-mail inválido.")
 	@Column(length= 75, nullable=false, unique=true)
 	private String email;
 	
+	@NotNull @NotBlank
+	@Size(max=99, message = "O comprimento da senha deve ser até 100.")
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(length= 100, nullable=false)
 	private String password;
 	
-	@Column(length= 20, nullable=false)
+	@NotNull @NotBlank
+	@Column(length= 20, nullable=false, updatable = false)
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
