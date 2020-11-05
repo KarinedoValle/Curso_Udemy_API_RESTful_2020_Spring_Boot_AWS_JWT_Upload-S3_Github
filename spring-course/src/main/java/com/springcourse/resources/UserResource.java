@@ -97,7 +97,7 @@ public class UserResource {
 		
 		String jwt = jwtManager.createToken(email, roles);
 		
-		return ResponseEntity.ok().header("AUTHENTICATION", jwt).build();
+		return ResponseEntity.ok().header("Authorization", jwt).build();
 	}
 	
 	@GetMapping("/requestsByUser/{id}")
