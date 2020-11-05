@@ -56,14 +56,18 @@ public class RequestService {
 		requestRepository.updateState(id, state);
 	}
 
-	public PageModel<Request> findAllByOwnerIdPageable(Long id, PageRequestModel pageRequest) {
-		
-		Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), pageRequest.getDirection(),pageRequest.getSortParam());
-		
+	public PageModel<Request> findAllByOwnerIdPageable(Long id, Pageable pageable) {		
 		Page<Request> page = requestRepository.findAllByOwnerId(id, pageable);
 		
 		PageModel<Request> requestPage = new PageModel<>(page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getSort(), page.getContent()); 
 		
+		return requestPage;
+	}
+
+	public PageModel<Request> findAllPageable(Pageable pageable) {
+		Page<Request> page = requestRepository.findAll(pageable);
+		
+		PageModel<Request> requestPage = new PageModel<>(page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getSort(), page.getContent());
 		return requestPage;
 	}
 

@@ -53,10 +53,8 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public PageModel<User> findAllPageable(PageRequestModel pageRequest){
-		Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getSize(), pageRequest.getDirection(), pageRequest.getSortParam());
-		Page<User> page = userRepository.findAll(pageable); 
-		
+	public PageModel<User> findAllPageable(Pageable pageable){
+		Page<User> page = userRepository.findAll(pageable); 		
 		PageModel<User> userPage = new PageModel<>(page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getSort(), page.getContent());
 		
 		return userPage;

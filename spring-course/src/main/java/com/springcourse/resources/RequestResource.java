@@ -3,6 +3,10 @@ package com.springcourse.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.exceptions.NotFoundException;
+import com.springcourse.model.PageModel;
 import com.springcourse.services.RequestService;
 import com.springcourse.services.RequestStageService;
 
@@ -58,9 +63,24 @@ public class RequestResource {
 		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
 	}
 	
+	@GetMapping("/page")
+	public ResponseEntity<PageModel<Request>> findAllPageable(@PageableDefault(size = 6, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+		PageModel<Request> requestsList = requestService.findAllPageable(pageable);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
+	}
+	
+	
 	@GetMapping("/stagesByRequest/{id}")
 	public ResponseEntity<List<RequestStage>> findAllByRequest(@PathVariable Long id){
 		List<RequestStage> requestStagesList = requestStageService.findAllByRequestId(id);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(requestStagesList);
+	}
+	
+	@GetMapping("/page/stagesByRequest/{id}")
+	public ResponseEntity<PageModel<RequestStage>> findAllByRequestPageable(@PathVariable Long id, @PageableDefault(size = 6, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+		PageModel<RequestStage> requestStagesList = requestStageService.findAllByRequestIdPageable(id, pageable);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(requestStagesList);
 	}

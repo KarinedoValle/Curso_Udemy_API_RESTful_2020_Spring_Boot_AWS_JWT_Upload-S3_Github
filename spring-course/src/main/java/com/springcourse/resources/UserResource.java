@@ -3,7 +3,10 @@ package com.springcourse.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springcourse.domain.Request;
@@ -20,7 +22,6 @@ import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
 import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.model.PageModel;
-import com.springcourse.model.PageRequestModel;
 import com.springcourse.services.RequestService;
 import com.springcourse.services.UserService;
 
@@ -60,9 +61,8 @@ public class UserResource {
 	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<PageModel<User>> findAllPageable(@RequestParam int page, int size, Direction direction, String parameter){
-		PageRequestModel pageRequest = new PageRequestModel(page, size, direction, parameter);
-		PageModel<User> usersList = userService.findAllPageable(pageRequest);
+	public ResponseEntity<PageModel<User>> findAllPageable(@PageableDefault(size = 6, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+		PageModel<User> usersList = userService.findAllPageable(pageable);
 		return ResponseEntity.status(HttpStatus.OK).body(usersList);
 	}
 	
@@ -80,10 +80,9 @@ public class UserResource {
 	}
 	
 	@GetMapping("/page/requestsByUser/{id}")
-	public ResponseEntity<PageModel<Request>> findAllByOwnerIdPageable(@PathVariable Long id, @RequestParam int page, int size, Direction direction, String parameter){
-		PageRequestModel pageRequest = new PageRequestModel(page, size, direction, parameter);
+	public ResponseEntity<PageModel<Request>> findAllByOwnerIdPageable(@PathVariable Long id, @PageableDefault(size = 6, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
 		
-		PageModel<Request> requestsList = requestService.findAllByOwnerIdPageable(id, pageRequest);
+		PageModel<Request> requestsList = requestService.findAllByOwnerIdPageable(id, pageable);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
 	}
