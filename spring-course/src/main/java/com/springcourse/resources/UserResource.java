@@ -10,6 +10,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.model.PageModel;
 import com.springcourse.services.RequestService;
@@ -85,6 +87,17 @@ public class UserResource {
 		PageModel<Request> requestsList = requestService.findAllByOwnerIdPageable(id, pageable);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(requestsList);
+	}
+	
+	@PatchMapping("/role/{id}")
+	public ResponseEntity<?> updateRole(@RequestBody UserUpdateRoleDto userDto, @PathVariable Long id){
+		User user = new User();
+		user.setId(id);
+		user.setRole(userDto.getRole());
+		
+		userService.updateRole(user.getId(), user.getRole());
+		
+		return ResponseEntity.ok().build();
 	}
 
 }

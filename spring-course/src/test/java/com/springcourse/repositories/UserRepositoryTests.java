@@ -49,6 +49,14 @@ public class UserRepositoryTests {
 	}
 	
 	@Test
+	public void updateRoleTest() {
+		
+		int affected = userRepository.updateRole(15L, Role.ADMINISTRATOR);
+		
+		assertThat(affected).isEqualTo(1);
+	}
+	
+	@Test
 	public void findAllTest() {
 		List <User> usersList = userRepository.findAll();
 		

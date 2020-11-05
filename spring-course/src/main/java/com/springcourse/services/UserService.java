@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.User;
+import com.springcourse.domain.enums.Role;
 import com.springcourse.domain.repositories.UserRepository;
 import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.model.PageModel;
@@ -71,6 +72,11 @@ public class UserService {
 		}
 		
 		return opUser.get();
+	}
+
+	public Integer updateRole(Long id, Role role) {
+		
+		return userRepository.updateRole(id, role);
 	}
 	
 }

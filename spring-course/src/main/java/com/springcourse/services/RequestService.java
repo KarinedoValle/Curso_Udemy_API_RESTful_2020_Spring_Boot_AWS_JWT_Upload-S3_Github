@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import com.springcourse.domain.enums.RequestState;
 import com.springcourse.domain.repositories.RequestRepository;
 import com.springcourse.exceptions.NotFoundException;
 import com.springcourse.model.PageModel;
-import com.springcourse.model.PageRequestModel;
 
 @Service
 public class RequestService {
